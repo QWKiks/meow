@@ -1,0 +1,17 @@
+{
+    "default_provider": "base",
+    "providers": {
+        "base": {
+            "api_key": "",
+            "model": "default-model"
+        },
+        "openrouter": {
+            "api_key": "",
+            "model": "default-model"
+        },
+        "gemini": {
+            "api_key": "",
+            "model": "default-model"
+        }
+    }
+}

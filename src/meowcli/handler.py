@@ -8,7 +8,7 @@ from rich.markup import MarkupError, escape
 from rich.panel import Panel
 from rich.table import Table
 
-from .q1q import (
+from .tools import (
     agent_execute_shell,
     agent_list_directory,
     agent_read_file,

@@ -5,8 +5,8 @@ from rich.markup import escape
 from rich.panel import Panel
 from rich.text import Text
 
-from .q1q import load_config, save_config
-from .q2q import chat_with_bot, get_available_models, handle_settings
+from .handler import chat_with_bot, get_available_models, handle_settings
+from .tools import load_config, save_config
 
 
 def gradient_color(start_color, end_color, steps):
