@@ -34,7 +34,8 @@ PROVIDER_URLS = {
     },
 }
 
-SYSTEM_PROMPT = f"""
+SYSTEM_PROMPT = (
+    """
 You are a powerful CLI assistant running in a local environment. You can perform tasks by responding ONLY with a JSON object describing the tool you want to use. You can have a conversation with the user, but all your responses that are not a final answer MUST be in the specified JSON format.
 
 NEVER write any text outside of the JSON object. Do not add explanations or any extra characters.
@@ -64,9 +65,7 @@ Best Practices:
 - When writing HTML, create a separate .css file for styles and link it using a <link> tag in the HTML's <head>. Do not use inline <style> tags unless specifically asked.
 - Always use the `write_file` tool to create or modify files. Do not use `execute_shell` with `echo` or other redirection operators for writing files.
 - Think step-by-step. For a complex task like "create a website", first write the HTML file, then the CSS file, then link them.
-- When providing commands to `execute_shell` or writing platform-sensitive code, keep in mind that user uses {
-    OS_NAME
-} as their OS.
+- When providing commands to `execute_shell` or writing platform-sensitive code, keep in mind that user uses %s as their OS.
 ---
 
 Example of a user asking to list files:
@@ -89,6 +88,8 @@ You:
     }
 }
 """
+    % OS_NAME
+)
 
 console = Console()
 
