@@ -47,3 +47,6 @@ target
 
 # MSVC
 *.pdb
+
+# meowCLI config
+/config.json
