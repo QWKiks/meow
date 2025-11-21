@@ -76,7 +76,8 @@ Configuration is stored in `AppData\Roaming\meowcli\config.json`. Example struct
 ## Configuration Location
 
 - **Windows**: `%APPDATA%\meowcli\config.json`
-- **Linux/Mac**: `~/.config/meowcli/config.json`
+- **Linux**: `~/.config/meowcli/config.json`
+- **macOS**: `~/Library/Application Support/meowcli/config.json`
 
 ## Agentic Mode
 
