@@ -3,8 +3,9 @@ import re
 
 import requests
 from rich.console import Console
+from rich.errors import MarkupError
 from rich.markdown import Markdown
-from rich.markup import MarkupError, escape
+from rich.markup import escape
 from rich.panel import Panel
 from rich.table import Table
 
@@ -13,7 +14,7 @@ from .tools import (
     agent_list_directory,
     agent_read_file,
     agent_write_file,
-    load_config,
+    #   load_config,
     save_config,
 )
 
@@ -142,6 +143,7 @@ def get_available_models(config):
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
+    response = None
     try:
         with console.status("[white]Загрузка моделей...[/white]"):
             response = requests.get(models_url, headers=headers)
@@ -215,6 +217,8 @@ def get_available_models(config):
     except json.JSONDecodeError:
         console.print(
             f"[bold red]Не удалось декодировать ответ от API моделей. Ответ:\n{response.text}[/bold red]"
+            if response is not None
+            else "[bold red]Не удалось декодировать ответ от API моделей.[/bold red]"
         )
         return []
 
@@ -358,6 +362,7 @@ def chat_with_bot(model_name, config):
                     ]
                 }
 
+            response = None
             try:
                 with console.status(
                     "[bold #ffb6c1]Агент думает...[/bold #ffb6c1]", spinner="dots8"
@@ -456,5 +461,7 @@ def chat_with_bot(model_name, config):
             except (IndexError, KeyError) as e:
                 console.print(
                     f"[bold red]Не удалось разобрать ответ от API: {e}[/bold red]\nОтвет: {response.text}"
+                    if response is not None
+                    else f"[bold red]Не удалось разобрать ответ от API: {e}[/bold red]"
                 )
                 break
