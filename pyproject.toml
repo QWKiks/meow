@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meowcli"
+version = "0.1.0"
+description = "opensource coding tool"
+authors = [
+    {name = "qwerty", email = "xrayhauk@gmail.com"}
+]
+
+[project.scripts]
+meowcli = "meowcli.main:main"
+
+[project.urls]
+"Homepage" = "https://github.com/QWKiks/meow.git"
