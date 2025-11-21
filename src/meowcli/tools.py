@@ -1,8 +1,25 @@
 import json
 import os
+import platform
 import subprocess
 
-CONFIG_FILE = os.path.join(os.environ.get("APPDATA", ""), "meowcli", "config.json")
+PLATFORM_NAME = OS_NAME = platform.system()
+if PLATFORM_NAME == "Linux":
+    OS_NAME = platform.freedesktop_os_release()["PRETTY_NAME"]
+
+match PLATFORM_NAME:
+    case "Windows":
+        CONFIG_FILE = os.path.join(
+            os.environ.get("APPDATA", ""), "meowcli", "config.json"
+        )
+    case "Linux":
+        CONFIG_FILE = os.path.join(
+            os.environ.get("XDG_CONFIG_HOME", ""), "meowcli", "config.json"
+        )
+    case "Darwin":
+        CONFIG_FILE = os.path.expanduser(
+            "~/Library/Application Support/meowcli/config.json"
+        )
 
 
 def load_config():
