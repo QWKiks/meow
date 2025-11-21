@@ -1,4 +1,6 @@
-__version__ = "0.1.0"
+import importlib.metadata
+
+__version__ = importlib.metadata.version("meowcli")
 
 from .handler import chat_with_bot, get_available_models, handle_settings
 from .main import main
