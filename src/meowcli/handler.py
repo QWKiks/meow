@@ -165,7 +165,7 @@ def get_available_models(config):
             models = models_data
 
         table = Table(
-            title=f"[bold white]Доступные модели AI ({provider})[/bold white]",
+            title=f"[bold white]Доступные модели ({provider})[/bold white]",
             show_header=True,
             header_style="bold white",
         )
@@ -179,7 +179,7 @@ def get_available_models(config):
             for model in models:
                 model_name = model.get("name")
                 if model_name:
-                    table.add_row(escape(model_name))
+                    table.add_row(escape(str(model_name)))
                     model_names.append(model_name)
         else:
             official_models = [m for m in models if not m.get("community")]
@@ -187,9 +187,10 @@ def get_available_models(config):
 
             for model in official_models:
                 model_name = model.get("name", "N/A")
+                description = model.get("description", "Нет описания")
                 table.add_row(
-                    escape(model_name),
-                    model.get("description", "Нет описания"),
+                    escape(str(model_name)),
+                    escape(str(description)),
                     "Официальная",
                 )
                 model_names.append(model_name)
@@ -197,9 +198,10 @@ def get_available_models(config):
                 table.add_section()
                 for model in community_models:
                     model_name = model.get("name", "N/A")
+                    description = model.get("description", "Нет описания")
                     table.add_row(
-                        escape(model_name),
-                        model.get("description", "Нет описания"),
+                        escape(str(model_name)),
+                        escape(str(description)),
                         "Сообщество",
                     )
                     model_names.append(model_name)
