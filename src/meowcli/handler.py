@@ -1,6 +1,7 @@
 import json
 import re
 
+import google.generativeai as genai
 import requests
 from rich.console import Console
 from rich.errors import MarkupError
@@ -358,33 +359,26 @@ def chat_with_bot(model_name, config):
                 headers["Authorization"] = f"Bearer {api_key}"
 
             data = {"model": model_name, "messages": history}
-            if provider == "gemini":
-                data = {
-                    "contents": [
-                        {
-                            "parts": [{"text": m["content"]}]
-                            for m in history
-                            if m["role"] == "user"
-                        }
-                    ]
-                }
-
             response = None
             try:
                 with console.status(
                     "[bold #ffb6c1]Агент думает...[/bold #ffb6c1]", spinner="dots8"
                 ):
-                    response = requests.post(chat_url, headers=headers, json=data)
-                    response.raise_for_status()
-
-                response_json = response.json()
-
-                if provider == "gemini":
-                    response_text = response_json["candidates"][0]["content"]["parts"][
-                        0
-                    ]["text"]
-                else:
-                    response_text = response_json["choices"][0]["message"]["content"]
+                    if provider == "gemini":
+                        genai.configure(api_key=api_key)
+                        model = genai.GenerativeModel(model_name)
+                        messages = [SYSTEM_PROMPT] + [
+                            m["content"] for m in history if m["role"] == "user"
+                        ]
+                        response = model.generate_content(messages)
+                        response_text = response.text
+                    else:
+                        response = requests.post(chat_url, headers=headers, json=data)
+                        response.raise_for_status()
+                        response_json = response.json()
+                        response_text = response_json["choices"][0]["message"][
+                            "content"
+                        ]
 
                 history.append({"role": "assistant", "content": response_text})
 

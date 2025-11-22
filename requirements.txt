@@ -1,2 +1,3 @@
 rich
 requests
+google-genai
